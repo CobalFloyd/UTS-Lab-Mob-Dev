@@ -1,28 +1,50 @@
-Anime Center App - UTS Mobile Application Development
-Aplikasi Anime Center adalah proyek ujian tengah semester (UTS) yang dikembangkan menggunakan Flutter. Aplikasi ini memungkinkan pengguna untuk menjelajahi daftar anime berdasarkan musim dan tahun secara real-time dengan integrasi Jikan API.
 
-📱 Fitur Utama
-Filter Musim & Tahun: Menampilkan anime berdasarkan kategori waktu yang spesifik.
-Pencarian Real-time: Mencari judul anime tanpa menghambat kinerja UI (Asynchronous).
-Sistem Favorit Global: Menyimpan anime favorit yang tetap tersimpan meskipun aplikasi ditutup (Persistent Storage).
-Offline Readiness: Menampilkan data terakhir yang berhasil dimuat saat tidak ada koneksi internet.
-Shimmer Effect: Transisi loading yang halus untuk meningkatkan User Experience.
+### **Proyek UTS - Lab Mobile Application Development**
 
-🏗️ Struktur Folder (Modular Structure)
-Proyek ini menggunakan pola arsitektur MVVM (Model-View-ViewModel) untuk memisahkan logika bisnis dari antarmuka pengguna:
-lib/models/: Berisi blueprint data (Anime). Bertanggung jawab untuk parsing data dari JSON API.
-lib/services/: Menangani komunikasi dengan API menggunakan Dio. Di sini juga diimplementasikan logika Deduplication untuk memastikan tidak ada ID anime yang ganda.
-lib/providers/: Mengelola state aplikasi menggunakan Provider. Mengatur logika favorit, pencarian, dan penanganan error.
-lib/views/: Folder untuk UI layar utama (HomeScreen) dan layar favorit (FavoritesScreen).
-lib/widgets/: Berisi komponen UI yang dapat digunakan kembali (Reusable Widgets) seperti AnimeCard untuk efisiensi kode.
+**Nama:** Jimmy 
+**NPM:** 2331052
+**Repositori:** [CobalFloyd/UTS-Lab-Mob-Dev](https://github.com/CobalFloyd/UTS-Lab-Mob-Dev)
 
-🧠 Pemilihan State Management: Provider
-Saya memilih Provider sebagai solusi State Management karena:
-Efisiensi: Mengurangi proses rebuild widget yang tidak perlu dengan notifyListeners().
-Kemudahan Maintenance: Memisahkan logika data dari UI secara bersih, sehingga fitur baru (seperti filter tahun) dapat ditambahkan tanpa merusak fitur lama.
-Global State: Memudahkan sinkronisasi data favorit di berbagai halaman secara konsisten.
+-----
 
-🛠️ Penanganan Error & Offline Readiness
-Sesuai dengan prinsip Responsible Attitude (A) dan Offline Readiness (P):
-Error Handling: Aplikasi tidak akan menampilkan kode error teknis yang membingungkan. Sebaliknya, aplikasi menampilkan pesan ramah pengguna dan tombol Retry jika API gagal dimuat.
-Caching: Menggunakan shared_preferences untuk menyimpan data secara lokal. Jika koneksi terputus, aplikasi akan secara otomatis memuat data terakhir yang tersimpan di memori perangkat.
+## 📖 Deskripsi Proyek
+
+**Anime Center** adalah aplikasi mobile berbasis Flutter yang mengintegrasikan Jikan API (MyAnimeList) untuk menyajikan informasi anime musiman secara *real-time*. Aplikasi ini dirancang untuk memberikan pengalaman navigasi yang mulus dengan fitur pencarian dan sistem penyimpanan favorit yang persisten.
+
+-----
+
+## 🏗️ Struktur Folder (Modular Structure)
+
+Proyek ini mengadopsi struktur folder modular untuk memastikan pemisahan logika (Separation of Concerns) sesuai dengan prinsip C6:
+
+  * **`lib/models/`**: Definisi skema data `Anime`. Mengatur konversi dari JSON ke objek Dart.
+  * **`lib/services/`**: Menangani permintaan HTTP ke API. Termasuk logika **Deduplication** untuk menyaring data ganda dari API.
+  * **`lib/providers/`**: Pusat logika bisnis (ViewModel). Mengatur state loading, error handling, dan sinkronisasi data antar screen.
+  * **`lib/views/`**: Kumpulan layar utama aplikasi (`HomeScreen`, `FavoritesScreen`).
+  * **`lib/widgets/`**: Komponen UI yang dapat digunakan kembali (*Reusable Widgets*) seperti `AnimeCard`.
+
+-----
+
+## 🛠️ Fitur Teknis
+
+1.  **Asynchronous Features (P)**: Menggunakan pola `async/await` untuk fetching data sehingga UI tetap responsif (tidak *freeze*).
+2.  **Filter Dinamis**: Memungkinkan filter berdasarkan **Tahun** dan **Musim** secara bersamaan.
+3.  **Real-time Search**: Fitur pencarian judul anime yang bekerja secara instan pada daftar yang sedang dimuat.
+4.  **Visual Consistency**: Implementasi **Shimmer Effect** sebagai *placeholder* kreatif saat data sedang diambil dari server.
+
+-----
+
+## 🧠 State Management: Provider
+
+Saya memilih **Provider** sebagai State Management karena:
+
+  * **Clean Code**: Memisahkan logika data dari file UI secara total.
+  * **Efisiensi**: Hanya me-*rebuild* widget yang membutuhkan data baru melalui `notifyListeners()`.
+  * **Global Access**: Memudahkan akses daftar favorit dari halaman mana pun tanpa perlu mempassing data secara manual.
+
+-----
+
+## 🛡️ Penanganan Error & Offline Readiness
+
+  * **Offline Access**: Menggunakan `shared_preferences` untuk menyimpan cache data terakhir. Jika koneksi internet hilang, aplikasi tetap menampilkan data terakhir yang berhasil dimuat.
+  * **User-Friendly Error**: Alih-alih menampilkan kode error teknis, aplikasi menampilkan pesan ramah pengguna dan tombol **Retry** untuk mencoba kembali (Responsible Attitude).
